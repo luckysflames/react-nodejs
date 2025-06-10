@@ -1,6 +1,6 @@
 require("dotenv").config();
 const express = require("express");
-const sequelize = require("./db");
+const sequelize = require("./database/db");
 const models = require("./models/models");
 const cors = require("cors");
 const fileUpload = require("express-fileupload");
@@ -20,16 +20,16 @@ app.use("/api", router);
 app.use(errorHandler);
 
 app.get("/", (req, res) => {
-  res.status(200).json({ message: "WORKING!!!" });
+    res.status(200).json({ message: "WORKING!!!" });
 });
 
 const start = async () => {
-  try {
-    await sequelize.authenticate();
-    await sequelize.sync();
-    app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
-  } catch (e) {
-    console.log(e);
-  }
+    try {
+        await sequelize.authenticate();
+        await sequelize.sync({ alter: true });
+        app.listen(PORT, () => console.log(`Server started on port ${PORT}`));
+    } catch (e) {
+        console.log(e);
+    }
 };
 start();
