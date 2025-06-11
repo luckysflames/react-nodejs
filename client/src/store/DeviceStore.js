@@ -9,7 +9,8 @@ export default class DeviceStore {
         this._selectedBrand = {};
         this._page = 1;
         this._totalCount = 0;
-        this._limit = 10;
+        this._limit = 8;
+        this._ratings = {};
         this._sortBy = "name";
         this._sortOrder = "asc";
         makeAutoObservable(this);
@@ -43,6 +44,10 @@ export default class DeviceStore {
 
     setTotalCount(count) {
         this._totalCount = count;
+    }
+
+    setRating(deviceId, avgRating, userRating = null) {
+        this._ratings[deviceId] = { avgRating, userRating };
     }
 
     setSortBy(sortBy) {

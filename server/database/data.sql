@@ -4,13 +4,8 @@ TRUNCATE TABLE orders, ratings, device_info, devices, type_brand, types, brands,
 -- Пользователи (users)
 INSERT INTO users ("email", "password", "role", "createdAt", "updatedAt") VALUES
 ('admin@example.com', '$2b$10$dhdI02k/ycpSFwEPUHavGetPX66xUU9aYhGBaDAxe8ILYVQV98q5C', 'ADMIN', '2024-01-01 10:00:00', '2024-01-01 10:00:00'), -- Пароль: admin
-('user1@example.com', '$2b$10$Z7X8kY3mN4vP9QwL5RtJuejK6mH2bT8xF9gL3WcV4TdR7YuM8NpK2', 'USER', '2024-01-05 12:00:00', '2024-01-05 12:00:00'), -- Пароль: user1
-('user2@example.com', '$2b$10$J9kL4mP8vT3xQ6RwY5SuHeF2nH7bU9cX8WdV6TyR5ZuM9NpL0KqJ3', 'USER', '2024-02-10 14:00:00', '2024-02-10 14:00:00'), -- Пароль: user2
-('user3@example.com', '$2b$10$K8mN5vQ9wT4xR7SyZ6TvIfG3oH8cU0dY9XeW7UzS6AvM1NpK2LqJ4', 'USER', '2024-03-15 16:00:00', '2024-03-15 16:00:00'), -- Пароль: user3
-('user4@example.com', '$2b$10$L9oP6wR0xU5yS8TzA7UwJgH4pI9dV1eZ0YfX8VwT7BuM2NpL3KqJ5', 'USER', '2024-04-20 18:00:00', '2024-04-20 18:00:00'), -- Пароль: user4
-('user5@example.com', '$2b$10$M0qR7xS1yV6zT9UaB8VwKhI5qJ0eW2fA1ZgY9WxU8CvM3NpL4KqJ6', 'USER', '2024-05-25 20:00:00', '2024-05-25 20:00:00'), -- Пароль: user5
-('user6@example.com', '$2b$10$N1rS8yT2zW7aU0VbC9WxLiJ6rK1fX3gB2AhZ0XyV9DwM4NpL5KqJ7', 'USER', '2024-06-30 22:00:00', '2024-06-30 22:00:00'), -- Пароль: user6
-('admin2@example.com', '$2b$10$O2sT9zU3aX8bV1WcD0XyMjK7sL2gY4hC3BiA1YzW0ExM5NpL6KqJ8', 'ADMIN', '2024-07-05 10:00:00', '2024-07-05 10:00:00'); -- Пароль: admin2
+('user1@example.com', '$2b$10$pU3VOTzFo/loylATFj6THuSWsFAgSFvbbazSRubGMP78bhmigeWMu', 'USER', '2024-01-05 12:00:00', '2024-01-05 12:00:00'), -- Пароль: user1
+('user2@example.com', '$2b$10$qHTcfAyl/E58bvwJerIGnOSJz.DY7q/qHeGZcbh88znHJ7/VQ2Jiq', 'USER', '2024-02-10 14:00:00', '2024-02-10 14:00:00'); -- Пароль: user2
 
 -- Бренды (brands)
 INSERT INTO brands ("name") VALUES
@@ -59,78 +54,139 @@ INSERT INTO devices ("name", "price", "rating", "img", "typeId", "brandId", "cre
 
 -- Характеристики устройств (device_info)
 INSERT INTO device_info ("title", "description", "deviceId") VALUES
-('Display', '6.1" OLED', 1),
-('Processor', 'A15 Bionic', 1),
-('Display', '6.4" AMOLED', 2),
-('Processor', 'Snapdragon 8 Gen 2', 2),
-('Display', '6.67" AMOLED', 3),
-('Processor', 'Snapdragon 7 Gen 1', 3),
-('Display', '13.6" Liquid Retina', 6),
-('Processor', 'M2', 6),
-('Display', '12.9" Liquid Retina XDR', 9),
-('Processor', 'M1', 9);
+-- iPhone 14 (deviceId: 1)
+('Display', '6.1\" Super Retina XDR OLED, 60 Hz', 1),
+('Processor', 'Apple A15 Bionic, 5 nm', 1),
+('Camera', 'Dual 12MP (wide, ultrawide), 4K video', 1),
+-- Galaxy S23 (deviceId: 2)
+('Display', '6.1\" Dynamic AMOLED 2X, 120 Hz', 2),
+('Processor', 'Qualcomm Snapdragon 8 Gen 2, 4 nm', 2),
+('Camera', 'Triple 50MP (wide) + 10MP (telephoto) + 12MP (ultrawide), 8K video', 2),
+-- Redmi Note 12 (deviceId: 3)
+('Display', '6.67\" AMOLED, 120 Hz', 3),
+('Processor', 'Qualcomm Snapdragon 4 Gen 1, 6 nm', 3),
+('Battery', '5000 mAh, 33W fast charging', 3),
+-- Xperia 5 IV (deviceId: 4)
+('Display', '6.1\" OLED, 120 Hz', 4),
+('Processor', 'Qualcomm Snapdragon 8 Gen 1, 4 nm', 4),
+('Camera', 'Triple 12MP (wide, ultrawide, telephoto), 4K HDR video', 4),
+-- P50 Pro (deviceId: 5)
+('Display', '6.6\" OLED, 120 Hz', 5),
+('Processor', 'Qualcomm Snapdragon 888, 5 nm', 5),
+('Camera', 'Quad 50MP (wide) + 64MP (periscope) + 13MP (ultrawide) + 40MP (mono), 4K video', 5),
+-- MacBook Air M2 (deviceId: 6)
+('Display', '13.6\" Liquid Retina, 2560x1664, 500 nits', 6),
+('Processor', 'Apple M2, 8-core CPU, up to 10-core GPU', 6),
+('Battery', 'Up to 18 hours, 52.6 Wh', 6),
+-- ZenBook 14 (deviceId: 7)
+('Display', '14\" OLED, 2880x1800, 120 Hz', 7),
+('Processor', 'Intel Core Ultra 7 155H, 16 cores', 7),
+('Memory', '16 GB LPDDR5X RAM', 7),
+-- ThinkPad X1 Carbon (deviceId: 8)
+('Display', '14\" WQUXGA, 3840x2400, 500 nits', 8),
+('Processor', 'Intel Core i7-1365U, 10 cores', 8),
+('Memory', '32 GB LPDDR5 RAM', 8),
+-- iPad Pro 12.9 (deviceId: 9)
+('Display', '12.9\" Liquid Retina XDR, 120 Hz, 1600 nits (HDR)', 9),
+('Processor', 'Apple M2, 8-core CPU, 10-core GPU', 9),
+('Camera', '12MP (wide) + 10MP (ultrawide), 4K video', 9),
+-- Galaxy Tab S8 (deviceId: 10)
+('Display', '11\" LTPS TFT, 120 Hz, 2560x1600', 10),
+('Processor', 'Qualcomm Snapdragon 8 Gen 1, 4 nm', 10),
+('Battery', '8000 mAh, 45W fast charging', 10),
+-- Mi Pad 5 (deviceId: 11)
+('Display', '11\" IPS LCD, 120 Hz, 2560x1600', 11),
+('Processor', 'Qualcomm Snapdragon 860, 7 nm', 11),
+('Camera', '13MP (rear), 4K video', 11),
+-- Apple Watch Series 8 (deviceId: 12)
+('Display', '1.9\" Retina LTPO OLED, 1000 nits', 12),
+('Processor', 'Apple S8, dual-core', 12),
+('Sensors', 'Blood oxygen, ECG, temperature sensing', 12),
+-- Mi Watch (deviceId: 13)
+('Display', '1.39\" AMOLED, 454x454', 13),
+('Processor', 'Qualcomm Snapdragon Wear 4100', 13),
+('Battery', '420 mAh, up to 16 days', 13),
+-- Watch GT 3 (deviceId: 14)
+('Display', '1.43\" AMOLED, 466x466', 14),
+('Processor', 'ARM Cortex-M', 14),
+('Battery', '455 mAh, up to 14 days', 14),
+-- WH-1000XM5 (deviceId: 15)
+('Driver', '30 mm dynamic driver', 15),
+('Noise Cancellation', 'Active Noise Cancellation with 8 microphones', 15),
+('Battery', 'Up to 30 hours with ANC, USB-C charging', 15),
+-- FreeBuds Pro 2 (deviceId: 16)
+('Driver', '11 mm dynamic + planar diaphragm', 16),
+('Noise Cancellation', 'Active Noise Cancellation, up to 47 dB', 16),
+('Battery', '6 hours (ANC off), 30 hours with case', 16);
 
 -- Рейтинги (ratings)
 INSERT INTO ratings ("rate", "userId", "deviceId") VALUES
-(5, 2, 1),
-(4, 3, 2),
-(4, 4, 3),
-(5, 5, 6),
-(4, 6, 9),
-(5, 7, 12);
+(5.0, 2, 1),
+(4.0, 3, 2),
+(4.0, 2, 3),
+(5.0, 2, 6),
+(4.0, 3, 9),
+(5.0, 3, 12);
+
+-- Корзина для пользователя с id=1
+INSERT INTO baskets ("userId") VALUES (1);
+
+-- Товары в корзине
+INSERT INTO basket_devices ("basketId", "deviceId", "quantity") VALUES
+(1, 1, 2), -- iPhone 14, 2 штуки
+(1, 2, 1); -- Samsung Galaxy S23, 1 штука
 
 -- Заказы (orders) с неравномерным распределением
-INSERT INTO orders ("userId", "deviceId", "createdAt", "updatedAt") VALUES
--- 2024
+INSERT INTO orders ("userId", "deviceId", "amount", "status", "createdAt", "updatedAt") VALUES
 -- Январь: 4 заказа
-(2, 1, '2024-01-05 12:00:00', '2024-01-05 12:00:00'),
-(3, 2, '2024-01-10 14:00:00', '2024-01-10 14:00:00'),
-(4, 3, '2024-01-15 16:00:00', '2024-01-15 16:00:00'),
-(5, 4, '2024-01-20 18:00:00', '2024-01-20 18:00:00'),
+(2, 1, 799.99, 'PAID', '2024-01-05 12:00:00', '2024-01-05 12:00:00'),
+(3, 2, 699.99, 'PAID', '2024-01-10 14:00:00', '2024-01-10 14:00:00'),
+(2, 3, 299.99, 'PAID', '2024-01-15 16:00:00', '2024-01-15 16:00:00'),
+(3, 4, 599.99, 'PAID', '2024-01-20 18:00:00', '2024-01-20 18:00:00'),
 -- Февраль: 1 заказ
-(6, 5, '2024-02-10 20:00:00', '2024-02-10 20:00:00'),
+(2, 5, 649.99, 'PAID', '2024-02-10 20:00:00', '2024-02-10 20:00:00'),
 -- Март: 3 заказа
-(7, 6, '2024-03-05 22:00:00', '2024-03-05 22:00:00'),
-(2, 7, '2024-03-10 12:00:00', '2024-03-10 12:00:00'),
-(3, 8, '2024-03-15 14:00:00', '2024-03-15 14:00:00'),
+(2, 6, 1199.99, 'PAID', '2024-03-05 22:00:00', '2024-03-05 22:00:00'),
+(2, 7, 999.99, 'PAID', '2024-03-10 12:00:00', '2024-03-10 12:00:00'),
+(3, 8, 1299.99, 'PAID', '2024-03-15 14:00:00', '2024-03-15 14:00:00'),
 -- Апрель: 2 заказа
-(4, 9, '2024-04-05 16:00:00', '2024-04-05 16:00:00'),
-(5, 10, '2024-04-10 18:00:00', '2024-04-10 18:00:00'),
+(3, 9, 1099.99, 'PAID', '2024-04-05 16:00:00', '2024-04-05 16:00:00'),
+(3, 10, 699.99, 'PAID', '2024-04-10 18:00:00', '2024-04-10 18:00:00'),
 -- Май: 4 заказа
-(6, 11, '2024-05-05 20:00:00', '2024-05-05 20:00:00'),
-(7, 12, '2024-05-10 22:00:00', '2024-05-10 22:00:00'),
-(2, 13, '2024-05-15 12:00:00', '2024-05-15 12:00:00'),
-(3, 14, '2024-05-20 14:00:00', '2024-05-20 14:00:00'),
+(2, 11, 399.99, 'PAID', '2024-05-05 20:00:00', '2024-05-05 20:00:00'),
+(2, 12, 399.99, 'PAID', '2024-05-10 22:00:00', '2024-05-10 22:00:00'),
+(2, 13, 149.99, 'PAID', '2024-05-15 12:00:00', '2024-05-15 12:00:00'),
+(3, 14, 199.99, 'PAID', '2024-05-20 14:00:00', '2024-05-20 14:00:00'),
 -- Июнь: 1 заказ
 -- 0 заказов
 -- Июль: 3 заказа
-(5, 16, '2024-07-05 18:00:00', '2024-07-05 18:00:00'),
-(6, 1, '2024-07-10 20:00:00', '2024-07-10 20:00:00'),
-(7, 2, '2024-07-15 22:00:00', '2024-07-15 22:00:00'),
+(2, 16, 199.99, 'PAID', '2024-07-05 18:00:00', '2024-07-05 18:00:00'),
+(2, 1, 799.99, 'PAID', '2024-07-10 20:00:00', '2024-07-10 20:00:00'),
+(3, 2, 699.99, 'PAID', '2024-07-15 22:00:00', '2024-07-15 22:00:00'),
 -- Август: 2 заказа
-(2, 3, '2024-08-05 12:00:00', '2024-08-05 12:00:00'),
-(3, 4, '2024-08-10 14:00:00', '2024-08-10 14:00:00'),
+(2, 3, 299.99, 'PAID', '2024-08-05 12:00:00', '2024-08-05 12:00:00'),
+(3, 4, 599.99, 'PAID', '2024-08-10 14:00:00', '2024-08-10 14:00:00'),
 -- Сентябрь: 4 заказа
-(4, 5, '2024-09-05 16:00:00', '2024-09-05 16:00:00'),
-(5, 6, '2024-09-10 18:00:00', '2024-09-10 18:00:00'),
-(6, 7, '2024-09-15 20:00:00', '2024-09-15 20:00:00'),
-(7, 8, '2024-09-20 22:00:00', '2024-09-20 22:00:00'),
+(3, 5, 649.99, 'PAID', '2024-09-05 16:00:00', '2024-09-05 16:00:00'),
+(2, 6, 1199.99, 'PAID', '2024-09-10 18:00:00', '2024-09-10 18:00:00'),
+(3, 7, 999.99, 'PAID', '2024-09-15 20:00:00', '2024-09-15 20:00:00'),
+(2, 8, 1299.99, 'PAID', '2024-09-20 15:00:00', '2024-09-20 15:00:00'),
 -- Октябрь: 1 заказ
-(2, 9, '2024-10-05 12:00:00', '2024-10-05 12:00:00'),
+(3, 9, 1099.99, 'PAID', '2024-10-05 12:00:00', '2024-10-05 12:00:00'),
 -- Ноябрь: 7 заказов
-(3, 10, '2024-11-05 14:00:00', '2024-11-05 14:00:00'),
-(4, 11, '2024-11-07 16:00:00', '2024-11-07 16:00:00'),
-(5, 12, '2024-11-10 18:00:00', '2024-11-10 18:00:00'),
-(6, 13, '2024-11-12 20:00:00', '2024-11-12 20:00:00'),
-(7, 14, '2024-11-15 22:00:00', '2024-11-15 22:00:00'),
-(2, 15, '2024-11-20 12:00:00', '2024-11-20 12:00:00'),
-(3, 16, '2024-11-25 14:00:00', '2024-11-25 14:00:00'),
+(2, 10, 699.99, 'PAID', '2024-11-05 14:00:00', '2024-11-05 14:00:00'),
+(3, 11, 399.99, 'PAID', '2024-11-07 16:00:00', '2024-11-07 16:00:00'),
+(2, 12, 399.99, 'PAID', '2024-11-10 18:00:00', '2024-11-10 18:00:00'),
+(2, 13, 149.99, 'PAID', '2024-11-12 20:00:00', '2024-11-12 20:00:00'),
+(3, 14, 199.99, 'PAID', '2024-11-15 22:00:00', '2024-11-15 22:00:00'),
+(2, 15, 349.99, 'PAID', '2024-11-20 12:00:00', '2024-11-20 12:00:00'),
+(3, 16, 199.99, 'PAID', '2024-11-25 14:00:00', '2024-11-25 14:00:00'),
 -- Декабрь: 8 заказов
-(4, 1, '2024-12-05 16:00:00', '2024-12-05 16:00:00'),
-(5, 2, '2024-12-07 18:00:00', '2024-12-07 18:00:00'),
-(6, 3, '2024-12-10 20:00:00', '2024-12-10 20:00:00'),
-(7, 4, '2024-12-12 22:00:00', '2024-12-12 22:00:00'),
-(2, 5, '2024-12-15 12:00:00', '2024-12-15 12:00:00'),
-(3, 6, '2024-12-17 14:00:00', '2024-12-17 14:00:00'),
-(4, 7, '2024-12-20 16:00:00', '2024-12-20 16:00:00'),
-(5, 8, '2024-12-25 18:00:00', '2024-12-25 18:00:00');
+(2, 1, 799.99, 'PAID', '2024-12-05 16:00:00', '2024-12-05 16:00:00'),
+(3, 2, 699.99, 'PAID', '2024-12-07 18:00:00', '2024-12-07 18:00:00'),
+(2, 3, 299.99, 'PAID', '2024-12-10 20:00:00', '2024-12-10 20:00:00'),
+(3, 4, 599.99, 'PAID', '2024-12-12 22:00:00', '2024-12-12 22:00:00'),
+(2, 5, 649.99, 'PAID', '2024-12-15 12:00:00', '2024-12-15 12:00:00'),
+(3, 6, 1199.99, 'PAID', '2024-12-17 14:00:00', '2024-12-17 14:00:00'),
+(2, 7, 999.99, 'PAID', '2024-12-20 16:00:00', '2024-12-20 16:00:00'),
+(3, 8, 1299.99, 'PAID', '2024-12-25 18:00:00', '2024-12-25 18:00:00');

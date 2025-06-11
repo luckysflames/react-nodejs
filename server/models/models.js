@@ -14,7 +14,7 @@ const Device = sequelize.define("device", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     name: { type: DataTypes.STRING, unique: true, allowNull: false },
     price: { type: DataTypes.INTEGER, allowNull: false },
-    rating: { type: DataTypes.INTEGER, defaultValue: 0 },
+    rating: { type: DataTypes.FLOAT, defaultValue: 0 },
     img: { type: DataTypes.STRING, allowNull: false },
     createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
     updatedAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
@@ -42,9 +42,18 @@ const Rating = sequelize.define(
     "rating",
     {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
-        rate: { type: DataTypes.INTEGER, allowNull: false },
+        rate: { type: DataTypes.FLOAT, allowNull: false },
     },
-    { timestamps: false }
+    {
+        timestamps: false,
+        indexes: [
+            {
+                unique: true,
+                fields: ["userId", "deviceId"],
+                name: "unique_user_device_rating",
+            },
+        ],
+    }
 );
 
 const DeviceInfo = sequelize.define(
@@ -54,7 +63,7 @@ const DeviceInfo = sequelize.define(
         title: { type: DataTypes.STRING, allowNull: false },
         description: { type: DataTypes.STRING, allowNull: false },
     },
-    { timestamps: false }
+    { timestamps: false, tableName: "device_info" }
 );
 
 const TypeBrand = sequelize.define(
@@ -65,10 +74,22 @@ const TypeBrand = sequelize.define(
     { timestamps: false }
 );
 
+const Basket = sequelize.define("basket", {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    userId: { type: DataTypes.INTEGER, unique: true },
+});
+
+const BasketDevice = sequelize.define("basket_device", {
+    id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
+    quantity: { type: DataTypes.INTEGER, allowNull: false, defaultValue: 1 },
+});
+
 const Order = sequelize.define("order", {
     id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     userId: { type: DataTypes.INTEGER, allowNull: false },
     deviceId: { type: DataTypes.INTEGER, allowNull: false },
+    amount: { type: DataTypes.INTEGER, allowNull: false },
+    status: { type: DataTypes.STRING, allowNull: false, defaultValue: "PAID" },
     createdAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
     updatedAt: { type: DataTypes.DATE, defaultValue: DataTypes.NOW },
 });
@@ -93,8 +114,18 @@ Brand.belongsToMany(Type, { through: TypeBrand });
 
 User.hasMany(Order);
 Order.belongsTo(User);
+
 Device.hasMany(Order);
 Order.belongsTo(Device);
+
+User.hasOne(Basket);
+Basket.belongsTo(User);
+
+Basket.hasMany(BasketDevice);
+BasketDevice.belongsTo(Basket);
+
+Device.hasMany(BasketDevice);
+BasketDevice.belongsTo(Device);
 
 module.exports = {
     User,
@@ -105,4 +136,6 @@ module.exports = {
     DeviceInfo,
     TypeBrand,
     Order,
+    Basket,
+    BasketDevice,
 };

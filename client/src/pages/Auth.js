@@ -14,8 +14,21 @@ const Auth = observer(() => {
     const isLogin = location.pathname === LOGIN_ROUTE;
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [errors, setErrors] = useState({});
+
+    const validateForm = () => {
+        const newErrors = {};
+        if (!email) newErrors.email = "Email обязателен";
+        else if (!/\S+@\S+\.\S+/.test(email)) newErrors.email = "Некорректный email";
+        if (!password) newErrors.password = "Пароль обязателен";
+        else if (password.length < 4)
+            newErrors.password = "Пароль должен быть не короче 6 символов";
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0;
+    };
 
     const click = async () => {
+        if (!validateForm()) return;
         try {
             let data;
             if (isLogin) {
@@ -23,9 +36,8 @@ const Auth = observer(() => {
             } else {
                 data = await registration(email, password);
             }
-            user.setUser(data);
+            user.setUser({ id: data.id, email: data.email, role: data.role });
             user.setIsAuth(true);
-            console.log("Auth.js: User set:", data);
             history(SHOP_ROUTE);
         } catch (e) {
             alert(e.response.data.message);

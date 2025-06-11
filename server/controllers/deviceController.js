@@ -77,12 +77,22 @@ class DeviceController {
     }
 
     async getOne(req, res) {
-        const { id } = req.params;
-        const device = await Device.findOne({
-            where: { id },
-            include: [{ model: DeviceInfo, as: "info" }],
-        });
-        return res.json(device);
+        try {
+            const { id } = req.params;
+            const device = await Device.findOne({ where: { id } });
+            if (!device) {
+                return res.status(404).json({ message: "Устройство не найдено" });
+            }
+            const infos = await DeviceInfo.findAll({ where: { deviceId: id } });
+            const fullDevice = await Device.findOne({
+                where: { id },
+                include: [{ model: DeviceInfo, as: "info" }],
+            });
+            return res.json(fullDevice);
+        } catch (e) {
+            console.error("Error in getOne:", e);
+            return res.status(500).json({ message: "Ошибка сервера" });
+        }
     }
 }
 

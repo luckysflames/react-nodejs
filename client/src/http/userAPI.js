@@ -9,7 +9,6 @@ export const registration = async (email, password) => {
   });
   localStorage.setItem("token", data.token);
   const decoded = jwtDecode(data.token);
-  console.log("Decoded token (login):", decoded);
   return decoded;
 };
 
@@ -21,7 +20,6 @@ export const login = async (email, password) => {
   console.log(data);
   localStorage.setItem("token", data.token);
   const decoded = jwtDecode(data.token);
-  console.log("Decoded token (check):", decoded);
   return decoded;
 };
 

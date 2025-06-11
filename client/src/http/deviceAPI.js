@@ -76,3 +76,30 @@ export const fetchPeakOrderPeriod = async (period) => {
     });
     return data;
 };
+
+export const createOrUpdateRating = async (deviceId, rate) => {
+    try {
+        const { data } = await $authHost.post("api/rating", { deviceId, rate });
+        return data;
+    } catch (e) {
+        console.error("Rating request error:", {
+            status: e.response?.status,
+            message: e.response?.data?.message,
+            data: e.response?.data,
+        });
+        throw e;
+    }
+};
+
+export const getUserRating = async (deviceId) => {
+    try {
+        const { data } = await $authHost.get(`api/rating/${deviceId}`);
+        return data;
+    } catch (e) {
+        console.error("Get user rating error:", {
+            status: e.response?.status,
+            message: e.response?.data?.message,
+        });
+        throw e;
+    }
+};

@@ -17,7 +17,6 @@ const App = observer(() => {
                 if (data) {
                     user.setUser(data);
                     user.setIsAuth(true);
-                    console.log("App.js: User set:", data);
                 }
             })
             .catch((e) => {

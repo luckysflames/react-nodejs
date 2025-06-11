@@ -22,7 +22,7 @@ CREATE TABLE devices (
     "id" SERIAL PRIMARY KEY,
     "name" VARCHAR(255) UNIQUE NOT NULL,
     "price" INTEGER NOT NULL CHECK ("price" >= 0),
-    "rating" INTEGER DEFAULT 0,
+    "rating" FLOAT DEFAULT 0,
     "img" VARCHAR(255) NOT NULL,
     "brandId" INTEGER REFERENCES brands("id") ON DELETE
     SET NULL,
@@ -41,9 +41,10 @@ CREATE TABLE device_info (
 -- Таблица рейтингов
 CREATE TABLE ratings (
     "id" SERIAL PRIMARY KEY,
-    "rate" INTEGER NOT NULL CHECK ("rate" >= 0),
+    "rate" FLOAT NOT NULL CHECK ("rate" >= 0),
     "userId" INTEGER REFERENCES users("id") ON DELETE CASCADE,
-    "deviceId" INTEGER REFERENCES devices("id") ON DELETE CASCADE
+    "deviceId" INTEGER REFERENCES devices("id") ON DELETE CASCADE,
+    CONSTRAINT unique_user_device_rating UNIQUE ("userId", "deviceId")
 );
 -- Таблица связи типов и брендов
 CREATE TABLE type_brand (
@@ -51,11 +52,29 @@ CREATE TABLE type_brand (
     "typeId" INTEGER REFERENCES types("id") ON DELETE CASCADE,
     "brandId" INTEGER REFERENCES brands("id") ON DELETE CASCADE
 );
+-- Таблица корзин
+CREATE TABLE baskets (
+    "id" SERIAL PRIMARY KEY,
+    "userId" INTEGER UNIQUE REFERENCES users("id") ON DELETE CASCADE,
+    "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
+-- Таблица девайсов корзин
+CREATE TABLE basket_devices (
+    "id" SERIAL PRIMARY KEY,
+    "basketId" INTEGER REFERENCES baskets("id") ON DELETE CASCADE,
+    "deviceId" INTEGER REFERENCES devices("id") ON DELETE CASCADE,
+    "quantity" INTEGER NOT NULL DEFAULT 1,
+    "createdAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP,
+    "updatedAt" TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
+);
 -- Таблица заказов
 CREATE TABLE orders (
     "id" SERIAL PRIMARY KEY,
     "userId" INTEGER REFERENCES users("id") ON DELETE CASCADE,
     "deviceId" INTEGER REFERENCES devices("id") ON DELETE CASCADE,
+    "amount" INTEGER NOT NULL CHECK ("amount" >= 0),
+    "status" VARCHAR(50) NOT NULL DEFAULT 'PAID',
     "createdAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     "updatedAt" TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
