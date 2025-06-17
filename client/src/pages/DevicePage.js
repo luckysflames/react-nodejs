@@ -1,11 +1,12 @@
 import React, { useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Button, Col, Container, Image, Row, Table } from "react-bootstrap";
 import { Context } from "../index";
 import { fetchOneDevice } from "../http/deviceAPI";
 import { createOrUpdateRating, getUserRating } from "../http/deviceAPI";
 import { addToBasket } from "../http/basketAPI";
 import { observer } from "mobx-react-lite";
+import { LOGIN_ROUTE } from "../utils/consts";
 
 const DevicePage = observer(() => {
     const { user, device: deviceStore } = useContext(Context);
@@ -16,6 +17,7 @@ const DevicePage = observer(() => {
     const [userRating, setUserRating] = useState(null);
     const [hoverRating, setHoverRating] = useState(null);
     const [ratingLoading, setRatingLoading] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchDevice();
@@ -64,6 +66,10 @@ const DevicePage = observer(() => {
     };
 
     const handleAddToBasket = async () => {
+        if (!user.isAuth) {
+            navigate(LOGIN_ROUTE);
+            return;
+        }
         try {
             await addToBasket(user.user.id, id);
             alert("Товар добавлен в корзину!");

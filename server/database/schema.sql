@@ -1,3 +1,7 @@
+-- Создание базы данных
+CREATE DATABASE store;
+\c store
+
 -- Таблица пользователей
 CREATE TABLE users (
     "id" SERIAL PRIMARY KEY,

@@ -1,4 +1,3 @@
-// src/pages/Auth.js
 import React, { useContext, useState } from "react";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import { NavLink, useLocation, useNavigate } from "react-router-dom";
@@ -28,7 +27,10 @@ const Auth = observer(() => {
     };
 
     const click = async () => {
-        if (!validateForm()) return;
+        if (!validateForm()) {
+            console.log(errors);
+            return;
+        }
         try {
             let data;
             if (isLogin) {

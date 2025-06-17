@@ -71,7 +71,7 @@ const TypeBrand = sequelize.define(
     {
         id: { type: DataTypes.INTEGER, primaryKey: true, autoIncrement: true },
     },
-    { timestamps: false }
+    { timestamps: false, tableName: "type_brand" }
 );
 
 const Basket = sequelize.define("basket", {

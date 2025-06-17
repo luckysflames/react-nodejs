@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Card, Button, Image } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
-import { DEVICE_ROUTE } from "../utils/consts";
+import { DEVICE_ROUTE, LOGIN_ROUTE } from "../utils/consts";
 import { Context } from "../index";
 import { addToBasket } from "../http/basketAPI";
 import { createOrUpdateRating, getUserRating } from "../http/deviceAPI";
@@ -31,6 +31,10 @@ const DeviceItem = ({ device }) => {
     };
 
     const handleAddToBasket = async () => {
+        if (!user.isAuth) {
+            navigate(LOGIN_ROUTE);
+            return;
+        }
         try {
             await addToBasket(user.user.id, device.id);
             alert("Товар добавлен в корзину!");
@@ -40,7 +44,7 @@ const DeviceItem = ({ device }) => {
     };
 
     return (
-        <Card className="mt-3" style={{ width: "18rem" }}>
+        <Card className="m-3" style={{ width: "18rem" }}>
             <Card.Img
                 variant="top"
                 src={process.env.REACT_APP_API_URL + device.img}

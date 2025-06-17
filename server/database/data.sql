@@ -1,5 +1,5 @@
 -- Очистка таблиц для предотвращения дублирования (можно закомментировать, если нужно добавить данные к существующим)
-TRUNCATE TABLE orders, ratings, device_info, devices, type_brand, types, brands, users RESTART IDENTITY CASCADE;
+TRUNCATE TABLE basket_devices, baskets, brands, device_info, devices, orders, ratings, type_brand, types, users RESTART IDENTITY CASCADE;
 
 -- Пользователи (users)
 INSERT INTO users ("email", "password", "role", "createdAt", "updatedAt") VALUES
